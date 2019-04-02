@@ -13,7 +13,7 @@ public class Transaction {
     public String description;
 
     static{
-    	id=100;
+    	id=0;
     }
     
     public Transaction() {

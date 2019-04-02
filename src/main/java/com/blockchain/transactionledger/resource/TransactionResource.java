@@ -1,12 +1,14 @@
 package com.blockchain.transactionledger.resource;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.blockchain.transactionledger.entity.Block;
@@ -20,23 +22,27 @@ public class TransactionResource {
 	
 	@GetMapping
 	public ArrayList<Block> allTransactions() {
-		return blockchain.ledger;
+		return blockchain.getAllTransactions();
 	}
 
 	@GetMapping("/{transactionId}")
-	public void getTransactionById() {
-		
-
+	public Block getTransactionById(@PathVariable Integer transactionId) {		
+		return blockchain.getTransactionByTransactionId(transactionId);
 	}
 
 	@PostMapping
-	public void addTransaction() {
-
+	public void addTransaction(@RequestBody Block block) {
+		blockchain.addTransaction(block);
 	}
 	
 	@PutMapping
-	public void updateTransaction() {
-		
+	public void updateTransaction(@RequestBody Block block) {
+		blockchain.updateTransaction(block);
+	}
+	
+	@DeleteMapping("delete/{transactionId}")
+	public void deleteTransaction(@PathVariable Integer transactionId) {
+		blockchain.deleteTransaction(blockchain.getTransactionByTransactionId(transactionId));
 	}
 
 }
