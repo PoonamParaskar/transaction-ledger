@@ -45,12 +45,12 @@ public class Blockchain {
 		 * logger.info("\nThe block chain: "); logger.info(blockchainJson);
 		 */
         //second block is changed
-        secondBlock.transaction=new Transaction("Shubham","Poonam",120,"Rs 120 has been sent");
-        ledger.set(1, secondBlock);
-        ledger.get(1).mineBlock(difficulty);
-        logger.info("\nBlockchain is Valid: " + isChainValid());
+//        secondBlock.transaction=new Transaction("Shubham","Poonam",120,"Rs 120 has been sent");
+//        ledger.set(1, secondBlock);
+//        ledger.get(1).mineBlock(difficulty);
+//        logger.info("\nBlockchain is Valid: " + isChainValid());
 
-		/*
+		/* 
 		 * String blockchainAfterJson = new
 		 * GsonBuilder().setPrettyPrinting().create().toJson(ledger);
 		 * logger.info("\nThe block chain: "); logger.info(blockchainJson);
