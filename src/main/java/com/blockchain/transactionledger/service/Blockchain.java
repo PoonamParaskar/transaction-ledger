@@ -26,6 +26,7 @@ public class Blockchain {
     
     public ResponseEntity<String> addTransaction(Block block) {
     	block.previousHash=repository.ledger.get(repository.ledger.size()-1).hash;
+    	block.transaction.transactionId=repository.ledger.get(repository.ledger.size()-1).transaction.transactionId++;
     	repository.add(block);
     	repository.ledger.get(repository.ledger.size()-1).mineBlock(difficulty);
     	
