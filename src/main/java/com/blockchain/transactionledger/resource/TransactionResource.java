@@ -34,8 +34,8 @@ public class TransactionResource {
 	}
 
 	@PostMapping
-	public void addTransaction(@RequestBody Block block) {
-		blockchain.addTransaction(block);
+	public ResponseEntity<String> addTransaction(@RequestBody Block block) {
+		return blockchain.addTransaction(block);
 	}
 	
 	@PutMapping

@@ -24,12 +24,16 @@ public class Blockchain {
     	return repository.ledger;
 	}
     
-    public boolean addTransaction(Block block) {
+    public ResponseEntity<String> addTransaction(Block block) {
     	block.previousHash=repository.ledger.get(repository.ledger.size()-1).hash;
     	repository.add(block);
     	repository.ledger.get(repository.ledger.size()-1).mineBlock(difficulty);
     	
-    	return true;
+    	if(!isChainValid()) {
+    		return new ResponseEntity<String>("Chain is invalid",HttpStatus.NOT_ACCEPTABLE);	
+    	}
+    	return new ResponseEntity<String>(HttpStatus.OK);
+    	
     }
     
     public ResponseEntity<String> updateTransaction(Block block) {
