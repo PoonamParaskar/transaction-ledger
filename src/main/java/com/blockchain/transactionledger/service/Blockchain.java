@@ -3,6 +3,8 @@ import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.blockchain.transactionledger.entity.Block;
@@ -30,36 +32,28 @@ public class Blockchain {
     	return true;
     }
     
-    public void updateTransaction(Block block) {
-    	repository.update(block.transaction.transactionId,block);		
+    public ResponseEntity<String> updateTransaction(Block block) {
+    	
+    	repository.update(block.transaction.transactionId,block);
+    	repository.ledger.get(repository.ledger.size()-1).mineBlock(difficulty);
+    	
+    	if(!isChainValid()) {
+    		return new ResponseEntity<String>("Chain is invalid",HttpStatus.NOT_ACCEPTABLE);	
+    	}
+    	return new ResponseEntity<String>(HttpStatus.OK);
+    	
+    	
 	}
     
-    public void deleteTransaction(Block block) {
-		repository.remove(block);
+    public ResponseEntity<String> deleteTransaction(Block block) {
+		repository.remove(block);	
+    	if(!isChainValid()) {
+    		return new ResponseEntity<String>("Chain is invalid",HttpStatus.NOT_ACCEPTABLE);	
+    	}
+    	return new ResponseEntity<String>(HttpStatus.OK);
+    	
 	}
     
-    public static void main(String[] args) {
-        //add our blocks to the blockchain ArrayList:
-
-
-        
-		/*
-		 * String blockchainJson = new
-		 * GsonBuilder().setPrettyPrinting().create().toJson(ledger);
-		 * logger.info("\nThe block chain: "); logger.info(blockchainJson);
-		 */
-        //second block is changed
-//        secondBlock.transaction=new Transaction("Shubham","Poonam",120,"Rs 120 has been sent");
-//        ledger.set(1, secondBlock);
-//        ledger.get(1).mineBlock(difficulty);
-//        logger.info("\nBlockchain is Valid: " + isChainValid());
-
-		/* 
-		 * String blockchainAfterJson = new
-		 * GsonBuilder().setPrettyPrinting().create().toJson(ledger);
-		 * logger.info("\nThe block chain: "); logger.info(blockchainJson);
-		 */
-    }
 
     public Boolean isChainValid() {
         Block currentBlock;

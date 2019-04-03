@@ -19,7 +19,7 @@ public class TransactionLedgerApplication {
     static Logger logger = Logger.getLogger(TransactionLedgerApplication.class.getName());
 	public static void main(String[] args) {
 		SpringApplication.run(TransactionLedgerApplication.class, args);
-		Blockchain.main(null);
+	
 	}
 
 	@Bean
